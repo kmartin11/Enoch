@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book of Enoch - Chapter 1</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome CDN for icons -->
+    <style>
+        /* General Styles */
+        body {
+            margin: 0;
+            font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,Arial;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text for better contrast */
+        }
+
+        /* Top Bar for Dropdown and Audio Button */
+        .top-bar {
+            display: flex;
+            justify-content: center; /* Center the content horizontally */
+            align-items: center;
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            padding: 10px;
+            position: fixed; /* Fixed to top */
+            top: 0;
+            width: 100%;
+            z-index: 10; /* Ensure it stays on top */
+            height: 60px; /* Set a fixed height for the top bar */
+        }
+
+        .top-bar > div {
+            margin: 0 10px; /* Add some space between the dropdown and buttons */
+        }
+
+        .dropdown {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dropdown select {
+            width: 150px; /* Adjust the width of the dropdown */
+            padding: 10px;
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+            border: 1px solid #333;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .dropdown select:hover {
+            background-color: #333; /* Subtle hover effect */
+        }
+
+        .audio-button {
+            display: flex;
+            justify-content: center; /* Center the icons horizontally */
+            align-items: center;
+            gap: 10px; /* Add spacing between buttons */
+        }
+
+        .audio-button button {
+            background-color: #4CAF50;
+            border: none;
+            width: 40px; /* Smaller size */
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
+        }
+
+        .audio-button button:hover {
+            background-color: #45a049;
+        }
+
+        .audio-button button:focus {
+            outline: none;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: nowrap; /* Ensure sections stay in a row */
+            width: 100vw; /* Full screen width */
+            margin-top: 60px; /* Match the height of the top bar */
+            padding-top: 60px; /* Prevent content from being covered by top bar */
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 20%; /* Adjusted width for proportional layout */
+            background-color: #1f1f1f; /* Darker sidebar */
+            color: #e0e0e0;
+            padding: 15px;
+            box-sizing: border-box; /* Include padding in the width */
+            border-right: 1px solid #333;
+        }
+
+        .sidebar h3 {
+            margin: 0;
+            color: #4CAF50; /* Accent color for "Book of Enoch" */
+        }
+
+        .sidebar a {
+            color: #4CAF50; /* Accent color for links */
+            text-decoration: none;
+            display: block;
+            padding: 10px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .sidebar a:hover {
+            background-color: #333; /* Highlight link on hover */
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1; /* 50% width of the container */
+            background-color: #1f1f1f; /* Darker background for contrast */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in the width */
+            border-right: 1px solid #333;
+            position: relative; /* Enable positioning of the audio button inside */
+        }
+
+        .chapter-title {
+            font-size: 24px;
+            color: #4CAF50; /* Accent color for titles */
+            margin-bottom: 10px;
+        }
+
+        .chapter-text {
+            line-height: 1.8;
+            color: #e0e0e0; /* Light text for readability */
+        }
+
+        .chapter-text p {
+            margin: 10px 0;
+        }
+
+        /* Resources Section */
+        .resources {
+            flex: 1; /* 50% width of the container */
+            background-color: #1f1f1f; /* Match dark theme */
+            padding: 20px;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+        .resources h3 {
+            font-size: 18px;
+            color: #4CAF50; /* Accent color */
+            margin-bottom: 10px;
+        }
+
+        .resources p {
+            margin: 10px 0;
+            color: #d0d0d0; /* Slightly lighter text */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column; /* Stack sections vertically on smaller screens */
+                height: auto; /* Allow scrolling on small screens */
+                margin-top: 80px; /* Space for dropdown on smaller screens */
+                padding-top: 80px; /* Space for top bar */
+            }
+
+            .sidebar,
+            .main-content,
+            .resources {
+                width: 100%; /* Full width for each section */
+                height: auto; /* Allow sections to adjust based on content */
+                border-right: none; /* Remove borders for stacked layout */
+                border-bottom: 1px solid #333; /* Add separators */
+            }
+
+            .dropdown select {
+                width: 90%; /* Expand dropdown on smaller screens */
+            }
+
+            .audio-button {
+                margin-left: 0; /* Adjust margin on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar for Dropdown and Audio Button -->
+    <div class="top-bar">
+        <div class="dropdown">
+            <select onchange="navigateToChapter(this)">
+                <option value="1">Chapter 1</option>
+                <option value="2">Chapter 2</option>
+                <option value="3">Chapter 3</option>
+				<option value="4">Chapter 4</option>
+				<option value="5">Chapter 5</option>
+				<option value="6">Chapter 6</option>
+				<option value="7">Chapter 7</option>
+				<option value="8">Chapter 8</option>
+				<option value="9">Chapter 9</option>
+				<option value="10">Chapter 10</option>
+				<option value="11">Chapter 11</option>
+				<option value="12">Chapter 12</option>
+				<option value="13">Chapter 13</option>
+				<option value="14">Chapter 14</option>
+				<option value="15">Chapter 15</option>
+				<option value="16">Chapter 16</option>
+				<option value="17">Chapter 17</option>
+				<option value="18">Chapter 18</option>
+				<option value="19">Chapter 19</option>
+				<option value="20">Chapter 20</option>
+				<option value="21">Chapter 21</option>
+				<option value="22">Chapter 22</option>
+				<option value="23">Chapter 23</option>
+				<option value="24">Chapter 24</option>
+				<option value="25">Chapter 25</option>
+				<option value="26">Chapter 26</option>
+				<option value="27">Chapter 27</option>
+				<option value="28">Chapter 28</option>
+				<option value="29">Chapter 29</option>
+				<option value="30">Chapter 30</option>
+				<option value="31">Chapter 31</option>
+				<option value="32">Chapter 32</option>
+				<option value="33">Chapter 33</option>
+				<option value="34">Chapter 34</option>
+				<option value="35">Chapter 35</option>
+				<option value="36">Chapter 36</option>
+				<option value="37">Chapter 37</option>
+				<option value="38">Chapter 38</option>
+				<option value="39">Chapter 39</option>
+				<option value="40">Chapter 40</option>
+				<option value="41">Chapter 41</option>
+				<option value="42">Chapter 42</option>
+				<option value="43">Chapter 43</option>
+				<option value="44">Chapter 44</option>
+				<option value="45">Chapter 45</option>
+				<option value="46">Chapter 46</option>
+				<option value="47">Chapter 47</option>
+				<option value="48">Chapter 48</option>
+				<option value="49">Chapter 49</option>
+				<option value="50">Chapter 50</option>
+				<option value="51">Chapter 51</option>
+				<option value="52">Chapter 52</option>
+				<option value="53">Chapter 53</option>
+				<option value="54">Chapter 54</option>
+				<option value="55">Chapter 55</option>
+				<option value="56">Chapter 56</option>
+				<option value="57">Chapter 57</option>
+				<option value="58">Chapter 58</option>
+				<option value="59">Chapter 59</option>
+				<option value="60">Chapter 60</option>
+				<option value="61">Chapter 61</option>
+				<option value="62">Chapter 62</option>
+				<option value="63">Chapter 63</option>
+				<option value="64">Chapter 64</option>
+				<option value="65">Chapter 65</option>
+				<option value="66">Chapter 66</option>
+				<option value="67">Chapter 67</option>
+				<option value="68">Chapter 68</option>
+				<option value="69">Chapter 69</option>
+				<option value="70">Chapter 70</option>
+				<option value="71">Chapter 71</option>
+				<option value="72">Chapter 72</option>
+				<option value="73">Chapter 73</option>
+				<option value="74">Chapter 74</option>
+				<option value="75">Chapter 75</option>
+				<option value="76">Chapter 76</option>
+				<option value="77">Chapter 77</option>
+				<option value="78">Chapter 78</option>
+				<option value="79">Chapter 79</option>
+				<option value="80">Chapter 80</option>
+				<option value="81">Chapter 81</option>
+				<option value="82">Chapter 82</option>
+				<option value="83">Chapter 83</option>
+				<option value="84">Chapter 84</option>
+				<option value="85">Chapter 85</option>
+				<option value="86">Chapter 86</option>
+				<option value="87">Chapter 87</option>
+				<option value="88">Chapter 88</option>
+				<option value="89">Chapter 89</option>
+				<option value="90">Chapter 90</option>
+				<option value="91">Chapter 91</option>
+				<option value="92">Chapter 92</option>
+				<option value="93">Chapter 93</option>
+				<option value="94">Chapter 94</option>
+				<option value="95">Chapter 95</option>
+				<option value="96">Chapter 96</option>
+				<option value="97">Chapter 97</option>
+				<option value="98">Chapter 98</option>
+				<option value="99">Chapter 99</option>
+				<option value="100">Chapter 100</option>
+				<option value="101">Chapter 101</option>
+				<option value="102">Chapter 102</option>
+				<option value="103">Chapter 103</option>
+				<option value="104">Chapter 104</option>
+				<option value="105">Chapter 105</option>
+				<option value="106">Chapter 106</option>
+				<option value="107">Chapter 107</option>
+				<option value="108">Chapter 108</option>
+
+                <!-- Add more chapters as needed -->
+            </select>
+        </div>
+        <div class="audio-button">
+            <button id="playPauseButton" onclick="playPauseAudio()">
+                <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8 5v14l11-7z"/>
+                </svg>
+                <svg id="pauseIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" style="display:none;">
+                    <path d="M6 19h4V5H6zm8 0h4V5h-4z"/>
+                </svg>
+            </button>
+            <label>
+                <input type="checkbox" id="continuous-play-checkbox" onchange="toggleContinuousPlay()"> Continuous Play
+            </label>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Book of Enoch</h3>
+			<h5>Translated by R.H. Charles</h5>
+            <a href="#">Read the Book</a>
+            <a href="#">Study Tools</a>
+            <a href="#">Audio</a>
+            <a href="#">Resources</a>
+            <a href="#">Store</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="chapter-title" id="chapter-title">Chapter 1</div>
+            <div class="chapter-text" id="chapter-text">
+			<p><sup>1</sup> The words of the blessing of Enoch, wherewith he blessed the elect and righteous, who will be <sup>2</sup> living in the day of tribulation, when all the wicked and godless are to be removed. And he took up his parable and said - Enoch, a righteous man, whose eyes were opened by God, saw the vision of the Holy One in the heavens, which the angels showed me, and from them I heard everything, and from them I understood as I saw, but not for this generation, but for a remote one which is <sup>3</sup> for to come. Concerning the elect I said, and took up my parable concerning them:</p>
+
+<p>The Holy Great One will come forth from His dwelling,<br>
+<sup>4</sup> And the eternal God will tread upon the earth, (even) on Mount Sinai,<br>
+[And appear from His camp]<br>
+And appear in the strength of His might from the heaven of heavens.</p>
+
+<p><sup>5</sup> And all shall be smitten with fear<br>
+And the Watchers shall quake,<br>
+And great fear and trembling shall seize them unto the ends of the earth.</p>
+
+<p><sup>6</sup> And the high mountains shall be shaken,<br>
+And the high hills shall be made low,<br>
+And shall melt like wax before the flame.</p>
+
+<p><sup>7</sup> And the earth shall be wholly rent in sunder,<br>
+And all that is upon the earth shall perish,<br>
+And there shall be a judgement upon all (men).</p>
+
+<p><sup>8</sup> But with the righteous He will make peace.<br><br>
+And will protect the elect,<br>
+And mercy shall be upon them.<br><br>
+And they shall all belong to God,<br>
+And they shall be prospered,<br>
+And they shall all be blessed.<br><br>
+And He will help them all,<br>
+And light shall appear unto them,<br>
+And He will make peace with them.</p>
+
+<p><sup>9</sup> And behold! He cometh with ten thousands of His holy ones<br>
+To execute judgement upon all,<br>
+And to destroy all the ungodly:<br><br>
+And to convict all flesh<br>
+Of all the works of their ungodliness which they have ungodly committed,<br>
+And of all the hard things which ungodly sinners have spoken against Him.</p>
+
+
+
+            </div>
+        </div>
+
+        <!-- Resources Section -->
+        <div class="resources" id="resources">
+            <h3>Resources for Chapter 1</h3>
+            <p>The Book of Enoch is an ancient text that contains a prophetic vision of the end of the world. According to chapter 1, Enoch, a righteous man, was given a vision by God of a future time of great tribulation, in which the wicked would be punished and the righteous would be rewarded. The vision describes a day of judgment, in which God would come to earth, accompanied by thousands of holy angels, to punish the ungodly and destroy all evil. The righteous, however, would be protected and blessed, and would belong to God. The book describes a time of great upheaval, in which the earth would be shaken and all that is evil would be destroyed, but ultimately, God would bring peace and prosperity to those who are faithful to him.</p>
+        </div>
+    </div>
+
+    <script>
+        // Chapter data for dynamic content loading
+        const chapters = {
+            1: {
+                title: "Chapter 1",
+                text: "<p><strong>1</strong> The words of the blessing of Enoch...</p><p><strong>2</strong> The Holy Great One will come forth from His dwelling...</p>",
+                resources: "<p>Resource 1 for Chapter 1: Details about the chapter...</p><p>Resource 2 for Chapter 1: Further study topics...</p>",
+                audioFile: "https://files.catbox.moe/jlpz6i.mp3"
+            },
+            2: {
+                title: "Chapter 2",
+                text: "<p><strong>1</strong> And the vision of Enoch was disclosed to him...</p><p><strong>2</strong> And he saw the angels of heaven...</p>",
+                resources: "<p>Resource 1 for Chapter 2: Details about the vision...</p><p>Resource 2 for Chapter 2: Further study topics...</p>",
+                audioFile: "https://files.catbox.moe/b01l7f.mp3"
+            },
+            3: {
+                title: "Chapter 3",
+                text: "<p><strong>1</strong> And Enoch began to write...</p><p><strong>2</strong> The secrets of the universe were revealed...</p>",
+                resources: "<p>Resource 1 for Chapter 3: Further study...</p><p>Resource 2 for Chapter 3: More insights...</p>",
+                audioFile: "1Enoch_Ch3.mp3"
+            }
+        };
+
+        // Function to dynamically load content based on chapter selection
+        function navigateToChapter(select) {
+            const chapter = select.value;
+            const chapterData = chapters[chapter];
+
+            // Update the main text, resources, and audio for the selected chapter
+            document.getElementById('chapter-title').innerHTML = chapterData.title;
+            document.getElementById('chapter-text').innerHTML = chapterData.text;
+            document.getElementById('resources').innerHTML = `<h3>Resources for ${chapterData.title}</h3>` + chapterData.resources;
+            document.getElementById('chapter-audio').src = chapterData.audioFile;
+        }
+
+        // Play audio function
+        function playPauseAudio() {
+            const audio = document.getElementById('chapter-audio');
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
+            
+            if (audio.paused) {
+                audio.play();
+                playIcon.style.display = 'none';  // Hide the play icon
+                pauseIcon.style.display = 'inline';  // Show the pause icon
+            } else {
+                audio.pause();
+                playIcon.style.display = 'inline';  // Show the play icon
+                pauseIcon.style.display = 'none';  // Hide the pause icon
+            }
+        }
+
+        // Continuous play functionality
+        function toggleContinuousPlay() {
+            const checkbox = document.getElementById('continuous-play-checkbox');
+            const audio = document.getElementById('chapter-audio');
+            
+            if (checkbox.checked) {
+                audio.onended = function() {
+                    const currentChapter = document.querySelector('select').value;
+                    const nextChapter = parseInt(currentChapter) + 1;
+                    if (chapters[nextChapter]) {
+                        document.querySelector('select').value = nextChapter;
+                        navigateToChapter(document.querySelector('select'));
+                        audio.play(); // Start the next audio
+                    }
+                };
+            } else {
+                audio.onended = null;  // Disable auto-advance to next chapter
+            }
+        }
+    </script>
+
+    <audio id="chapter-audio" src="https://files.catbox.moe/jlpz6i.mp3"></audio>
+</body>
+</html>
