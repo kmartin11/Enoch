@@ -819,6 +819,8 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
         function navigateToChapter(select) {
             const chapter = select.value;
             const chapterData = chapters[chapter];
+			const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
 
             // Update the main text, resources, and audio for the selected chapter
             document.getElementById('chapter-title').innerHTML = chapterData.title;
@@ -828,6 +830,9 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
 
             // Enable or disable the previous and next buttons based on the current chapter
             enableDisableButtons(chapter);
+			
+			playIcon.style.display = 'inline';  // Show the play icon
+            pauseIcon.style.display = 'none';  // Hide the pause icon
         }
 
         // Function to navigate to the previous chapter
