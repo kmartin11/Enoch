@@ -873,24 +873,39 @@
             const audio = document.getElementById('chapter-audio');
             const playIcon = document.getElementById('playIcon');
             const pauseIcon = document.getElementById('pauseIcon');
+            
             if (audio.paused) {
                 audio.play();
-                playIcon.style.display = 'none';
-                pauseIcon.style.display = 'inline';
+                playIcon.style.display = 'none';  // Hide the play icon
+                pauseIcon.style.display = 'inline';  // Show the pause icon
             } else {
                 audio.pause();
-                playIcon.style.display = 'inline';
-                pauseIcon.style.display = 'none';
+                playIcon.style.display = 'inline';  // Show the play icon
+                pauseIcon.style.display = 'none';  // Hide the pause icon
             }
         }
 
+        // Continuous play functionality
         function toggleContinuousPlay() {
-            const audio = document.getElementById('chapter-audio');
             const checkbox = document.getElementById('continuous-play-checkbox');
-            audio.onended = checkbox.checked ? () => changeChapter(1) : null;
+            const audio = document.getElementById('chapter-audio');
+            
+            if (checkbox.checked) {
+                audio.onended = function() {
+                    const currentChapter = document.querySelector('select').value;
+                    const nextChapter = parseInt(currentChapter) + 1;
+                    if (chapters[nextChapter]) {
+                        document.querySelector('select').value = nextChapter;
+                        navigateToChapter(document.querySelector('select'));
+                        audio.play(); // Start the next audio
+                    }
+                };
+            } else {
+                audio.onended = null;  // Disable auto-advance to next chapter
+            }
         }
     </script>
 
-    <audio id="chapter-audio" src="audio/chapter1.mp3"></audio>
+    <audio id="chapter-audio" src="audio/1Enoch_Ch1.mp3"></audio>
 </body>
 </html>
