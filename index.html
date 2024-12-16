@@ -415,7 +415,7 @@
 
     <script>
         // Data for chapters
- const chapters = {
+         const chapters = {
             1: {
                 title: "Chapter 1",
                 text: "<p><sup>1</sup> The words of the blessing of Enoch, wherewith he blessed the elect and righteous, who will be <sup>2</sup> living in the day of tribulation, when all the wicked and godless are to be removed. And he took up his parable and said - Enoch, a righteous man, whose eyes were opened by God, saw the vision of the Holy One in the heavens, which the angels showed me, and from them I heard everything, and from them I understood as I saw, but not for this generation, but for a remote one which is <sup>3</sup> for to come. Concerning the elect I said, and took up my parable concerning them:</p><p>The Holy Great One will come forth from His dwelling,<br> <sup>4</sup> And the eternal God will tread upon the earth, (even) on Mount Sinai,<br> [And appear from His camp]<br>And appear in the strength of His might from the heaven of heavens.</p> <p><sup>5</sup> And all shall be smitten with fear<br> And the Watchers shall quake,<br>And great fear and trembling shall seize them unto the ends of the earth.</p> <p><sup>6</sup> And the high mountains shall be shaken,<br> And the high hills shall be made low,<br>And shall melt like wax before the flame.</p> <p><sup>7</sup> And the earth shall be wholly rent in sunder,<br> And all that is upon the earth shall perish,<br> And there shall be a judgement upon all (men).</p> <p><sup>8</sup> But with the righteous He will make peace.<br><br> And will protect the elect,<br> And mercy shall be upon them.<br><br> And they shall all belong to God,<br> And they shall be prospered,<br> And they shall all be blessed.<br><br> And He will help them all,<br> And light shall appear unto them,<br> And He will make peace with them.</p> <p><sup>9</sup> And behold! He cometh with ten thousands of His holy ones<br> To execute judgement upon all,<br> And to destroy all the ungodly:<br><br> And to convict all flesh<br> Of all the works of their ungodliness which they have ungodly committed,<br> And of all the hard things which ungodly sinners have spoken against Him.</p>",
@@ -845,10 +845,11 @@
         };
 
 
+        let isPlaying = false;
+
         function navigateToChapter(select) {
             const chapter = parseInt(select.value);
             updateChapter(chapter);
-			changeChapter(this);
         }
 
         function changeChapter(direction) {
@@ -865,9 +866,16 @@
             document.getElementById('chapter-title').textContent = chapters[chapter].title;
             document.getElementById('chapter-text').innerHTML = chapters[chapter].text;
             document.getElementById('resources').innerHTML = `<h3>Resources for ${chapters[chapter].title}</h3>` + chapters[chapter].resources;
-
             document.getElementById('prevButton').disabled = chapter === 1;
             document.getElementById('nextButton').disabled = !chapters[chapter + 1];
+
+            // Update audio to the new chapter
+            const audio = document.getElementById('chapter-audio');
+            audio.src = chapters[chapter].audio;
+
+            if (isPlaying) {
+                audio.play();
+            }
         }
 
         function playPauseAudio() {
@@ -877,33 +885,21 @@
             
             if (audio.paused) {
                 audio.play();
-                playIcon.style.display = 'none';  // Hide the play icon
-                pauseIcon.style.display = 'inline';  // Show the pause icon
+                isPlaying = true;
+                playIcon.style.display = 'none';
+                pauseIcon.style.display = 'inline';
             } else {
                 audio.pause();
-                playIcon.style.display = 'inline';  // Show the play icon
-                pauseIcon.style.display = 'none';  // Hide the pause icon
+                isPlaying = false;
+                playIcon.style.display = 'inline';
+                pauseIcon.style.display = 'none';
             }
         }
 
-        // Continuous play functionality
         function toggleContinuousPlay() {
-            const checkbox = document.getElementById('continuous-play-checkbox');
             const audio = document.getElementById('chapter-audio');
-            
-            if (checkbox.checked) {
-                audio.onended = function() {
-                    const currentChapter = document.querySelector('select').value;
-                    const nextChapter = parseInt(currentChapter) + 1;
-                    if (chapters[nextChapter]) {
-                        document.querySelector('select').value = nextChapter;
-                        navigateToChapter(document.querySelector('select'));
-                        audio.play(); // Start the next audio
-                    }
-                };
-            } else {
-                audio.onended = null;  // Disable auto-advance to next chapter
-            }
+            const checkbox = document.getElementById('continuous-play-checkbox');
+            audio.onended = checkbox.checked ? () => changeChapter(1) : null;
         }
     </script>
 
