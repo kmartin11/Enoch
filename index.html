@@ -903,6 +903,8 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
         function toggleContinuousPlay() {
             const checkbox = document.getElementById('continuous-play-checkbox');
             const audio = document.getElementById('chapter-audio');
+			const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
             
             if (checkbox.checked) {
                 audio.onended = function() {
@@ -912,6 +914,8 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
                         document.querySelector('select').value = nextChapter;
                         navigateToChapter(document.querySelector('select'));
                         audio.play(); // Start the next audio
+						playIcon.style.display = 'none';  // Hide the play icon
+						pauseIcon.style.display = 'inline';  // Show the pause icon
                     }
                 };
             } else {
