@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book of Enoch</title>
     <style>
-    /* General Styles */
+ /* General Styles */
     body {
         margin: 0;
         font-family: Arial, sans-serif;
@@ -201,17 +201,22 @@
 	html body div.container div#resources.resources {
 	margin-top:-15px;
 	}
-</style>
-
     </style>
 </head>
 <body>
     <!-- Top Bar for Dropdown and Audio Button -->
     <div class="top-bar">
+        <div class="audio-button">
+            <button id="prevChapterButton" onclick="navigateToPreviousChapter()" disabled>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+            </button>
+        </div>
         <div class="dropdown">
             <select onchange="navigateToChapter(this)">
-<option value="1">Chapter 1</option>
-                <option value="2">Chapter 2</option>
+                <option value="1">Chapter 1</option>
+                 <option value="2">Chapter 2</option>
                 <option value="3">Chapter 3</option>
 				<option value="4">Chapter 4</option>
 				<option value="5">Chapter 5</option>
@@ -317,11 +322,15 @@
 				<option value="105">Chapter 105</option>
 				<option value="106">Chapter 106</option>
 				<option value="107">Chapter 107</option>
-				<option value="108">Chapter 108</option>
-                <!-- Add more chapters as needed -->
+                <option value="108">Chapter 108</option>
             </select>
         </div>
         <div class="audio-button">
+            <button id="nextChapterButton" onclick="navigateToNextChapter()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M8.59 16.59L10 18l6-6-6-6-1.41 1.41L12.17 12z"/>
+                </svg>
+            </button>
             <button id="playPauseButton" onclick="playPauseAudio()">
                 <svg id="playIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path d="M8 5v14l11-7z"/>
@@ -336,8 +345,7 @@
         </div>
     </div>
 
-    <div class="container">
-        <!-- Sidebar -->
+ <!-- Sidebar -->
         <div class="sidebar">
             <h3>1 Enoch - Translated by R.H. Charles</h3>
             <a href="#">Read the Book</a>
@@ -399,8 +407,10 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
         </div>
     </div>
 
+
     <script>
-        // Chapter data for dynamic content loading
+        // Existing chapter data remains the same
+ // Chapter data for dynamic content loading
         const chapters = {
             1: {
                 title: "Chapter 1",
@@ -840,9 +850,49 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
             document.getElementById('chapter-text').innerHTML = chapterData.text;
             document.getElementById('resources').innerHTML = `<h3>Resources for ${chapterData.title}</h3>` + chapterData.resources;
             document.getElementById('chapter-audio').src = chapterData.audioFile;
+
+            // Enable or disable the previous and next buttons based on the current chapter
+            enableDisableButtons(chapter);
         }
 
-        // Play audio function
+        // Function to navigate to the previous chapter
+        function navigateToPreviousChapter() {
+            const currentChapter = document.querySelector('select').value;
+            const prevChapter = parseInt(currentChapter) - 1;
+            if (chapters[prevChapter]) {
+                document.querySelector('select').value = prevChapter;
+                navigateToChapter(document.querySelector('select'));
+            }
+        }
+
+        // Function to navigate to the next chapter
+        function navigateToNextChapter() {
+            const currentChapter = document.querySelector('select').value;
+            const nextChapter = parseInt(currentChapter) + 1;
+            if (chapters[nextChapter]) {
+                document.querySelector('select').value = nextChapter;
+                navigateToChapter(document.querySelector('select'));
+            }
+        }
+
+        // Function to enable or disable the previous and next buttons
+        function enableDisableButtons(chapter) {
+            const prevButton = document.getElementById('prevChapterButton');
+            const nextButton = document.getElementById('nextChapterButton');
+
+            if (chapter == 1) {
+                prevButton.disabled = true;
+            } else {
+                prevButton.disabled = false;
+            }
+
+            if (chapter == Object.keys(chapters).length) {
+                nextButton.disabled = true;
+            } else {
+                nextButton.disabled = false;
+            }
+        }
+
         // Play audio function
         function playPauseAudio() {
             const audio = document.getElementById('chapter-audio');
@@ -879,8 +929,11 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
                 audio.onended = null;  // Disable auto-advance to next chapter
             }
         }
+
+        // Initialize the buttons based on the first chapter
+        enableDisableButtons(1);
     </script>
 
-    <audio id="chapter-audio" src="https://files.catbox.moe/jlpz6i.mp3"></audio>
+    <audio id="chapter-audio" src="audio/1Enoch_Ch1.mp3"></audio>
 </body>
 </html>
