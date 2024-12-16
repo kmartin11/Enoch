@@ -844,12 +844,14 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
         function navigateToNextChapter() {
             const currentChapter = document.querySelector('select').value;
             const nextChapter = parseInt(currentChapter) + 1;
-			const audio = document.getElementById('chapter-audio');
+            const playIcon = document.getElementById('playIcon');
+            const pauseIcon = document.getElementById('pauseIcon');
             if (chapters[nextChapter]) {
                 document.querySelector('select').value = nextChapter;
                 navigateToChapter(document.querySelector('select'));
             }
-			audio.pause();
+            playIcon.style.display = 'inline';  // Show the play icon
+            pauseIcon.style.display = 'none';  // Hide the pause icon
         }
 
         // Function to enable or disable the previous and next buttons
