@@ -99,6 +99,7 @@
     border-right: 1px solid #333;
     height: calc(100vh - 60px);
     overflow-y: auto;
+	padding-top:20px;
 }
 
     .sidebar h3 {
@@ -165,40 +166,7 @@
         color: #d0d0d0; /* Slightly lighter text */
     }
 
-    /* Responsive Design */
-    @media (max-width: 768px) {
-        .container {
-            flex-direction: column; /* Stack sections vertically on smaller screens */
-            height: auto; /* Allow scrolling on small screens */
-            margin-top: 80px; /* Space for dropdown on smaller screens */
-            padding-top: 80px; /* Space for top bar */
-        }
 
-        .sidebar,
-        .main-content,
-        .resources {
-            width: 100%; /* Full width for each section */
-            height: auto; /* Allow sections to adjust based on content */
-            border-right: none; /* Remove borders for stacked layout */
-            border-bottom: 1px solid #333; /* Add separators */
-        }
-
-        .dropdown select {
-            width: 90%; /* Expand dropdown on smaller screens */
-        }
-
-        .audio-button {
-            margin-left: 0; /* Adjust margin on small screens */
-        }
-    }
-	
-	html body div.container {
-	margin-top:10px;
-	}
-	
-	html body div.container div#resources.resources {
-	margin-top:-15px;
-	}
     </style>
 </head>
 <body>
@@ -218,7 +186,7 @@
                 <option value="3">Chapter 3</option>
 				<option value="4">Chapter 4</option>
 				<option value="5">Chapter 5</option>
-				<option value="6">Chapter 6</option>
+								<option value="6">Chapter 6</option>
 				<option value="7">Chapter 7</option>
 				<option value="8">Chapter 8</option>
 				<option value="9">Chapter 9</option>
@@ -321,6 +289,7 @@
 				<option value="106">Chapter 106</option>
 				<option value="107">Chapter 107</option>
                 <option value="108">Chapter 108</option>
+
             </select>
         </div>
         <div class="audio-button">
@@ -342,7 +311,7 @@
             </label>
         </div>
     </div>
-
+<div class="container">
  <!-- Sidebar -->
         <div class="sidebar">
             <h3>1 Enoch - Translated by R.H. Charles</h3>
@@ -428,6 +397,7 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
                 resources: "<p>Resource 1 for Chapter 3: Further study...</p><p>Resource 2 for Chapter 3: More insights...</p><img width='512' height='512' src='https://files.catbox.moe/3ic40e.png' />",
                 audioFile: "audio/1Enoch_Ch3.mp3"
             },
+			
 			4: {
                 title: "Chapter 4",
                 text: "<p>And again, observe ye the days of summer how the sun is above the earth over against it. And you seek shade and shelter by reason of the heat of the sun, and the earth also burns with growing heat, and so you cannot tread on the earth, or on a rock by reason of its heat.</p>",
@@ -836,6 +806,7 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
                 resources: "<p>Resource 1 for Chapter 3: Further study...</p><p>Resource 2 for Chapter 3: More insights...</p><img width='512' height='512' src='https://files.catbox.moe/fu8ozt.png' />",
                 audioFile: "audio/1Enoch_Ch71.mp3"
             },
+			
         };
 
         // Function to dynamically load content based on chapter selection
