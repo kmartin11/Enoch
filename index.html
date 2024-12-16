@@ -892,6 +892,11 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
                 playIcon.style.display = 'inline';  // Show the play icon
                 pauseIcon.style.display = 'none';  // Hide the pause icon
             }
+			audio.addEventListener('ended', () => {
+            // Perform actions when the audio has finished playing
+                playIcon.style.display = 'inline';  // Show the play icon
+                pauseIcon.style.display = 'none';  // Hide the pause icon
+			});
         }
 
         // Continuous play functionality
@@ -914,6 +919,7 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
             }
         }
 
+		
         // Initialize the buttons based on the first chapter
         enableDisableButtons(1);
     </script>
