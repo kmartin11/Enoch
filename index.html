@@ -821,6 +821,7 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
             const chapterData = chapters[chapter];
 			const playIcon = document.getElementById('playIcon');
             const pauseIcon = document.getElementById('pauseIcon');
+			const audio = document.getElementById('chapter-audio');
 
             // Update the main text, resources, and audio for the selected chapter
             document.getElementById('chapter-title').innerHTML = chapterData.title;
@@ -833,6 +834,7 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
 			
 			playIcon.style.display = 'inline';  // Show the play icon
             pauseIcon.style.display = 'none';  // Hide the pause icon
+			
         }
 
         // Function to navigate to the previous chapter
@@ -903,8 +905,6 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
         function toggleContinuousPlay() {
             const checkbox = document.getElementById('continuous-play-checkbox');
             const audio = document.getElementById('chapter-audio');
-			const playIcon = document.getElementById('playIcon');
-            const pauseIcon = document.getElementById('pauseIcon');
             
             if (checkbox.checked) {
                 audio.onended = function() {
@@ -914,8 +914,6 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
                         document.querySelector('select').value = nextChapter;
                         navigateToChapter(document.querySelector('select'));
                         audio.play(); // Start the next audio
-						playIcon.style.display = 'none';  // Hide the play icon
-						pauseIcon.style.display = 'inline';  // Show the pause icon
                     }
                 };
             } else {
@@ -926,6 +924,7 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
 		
         // Initialize the buttons based on the first chapter
         enableDisableButtons(1);
+
     </script>
 
     <audio id="chapter-audio" src="audio/1Enoch_Ch1.mp3"></audio>
