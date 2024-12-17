@@ -86,7 +86,7 @@
     display: flex;
     flex-direction: row; /* Ensure sections are in a horizontal row */
     width: 100%;
-    margin-top: 60px; /* Account for the height of the top bar */
+    margin-top: 23px; /* Account for the height of the top bar */
 }
 
     /* Sidebar Styles */
@@ -164,17 +164,252 @@
         font-size: 24px;
         color: #4CAF50; /* Accent color */
         margin-bottom: 10px;
+		padding-top:-15px;
     }
 
     .resources p {
         margin: 10px 0;
         color: #d0d0d0; /* Slightly lighter text */
     }
+/* Responsive CSS for mobile view */
+@media (max-width: 768px) {
+    /* Hide the sidebar and adjust container */
+    .sidebar {
+        display: none;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    /* Add new top navbar */
+    .mobile-top-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1f1f1f;
+        color: #e0e0e0;
+        padding: 10px 15px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 11; /* Above existing navbar */
+    }
+
+    .mobile-title {
+        text-align: center;
+        flex: 1;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .hamburger-menu {
+        background: none;
+        border: none;
+        color: #e0e0e0;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .mobile-links {
+        display: none;
+        flex-direction: column;
+        background-color: #1f1f1f;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        border-top: 1px solid #333;
+        z-index: 10;
+    }
+
+    .mobile-links a {
+        color: #4CAF50;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-bottom: 1px solid #333;
+        text-align: center;
+    }
+
+    .mobile-links a:hover {
+        background-color: #333;
+    }
+
+    /* Show mobile links when active */
+    .mobile-links.active {
+        display: flex;
+    }
+
+    /* Adjust main content and resource sections */
+    .main-content,
+    .resources {
+        width: 100%;
+        margin-top: 120px; /* Adjust for top navbar height */
+    }
+}
+
+@media (max-width: 768px) {
+    /* Reset body margins and padding */
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Mobile top navbar (always on top) */
+    .mobile-top-navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #1f1f1f;
+        color: #e0e0e0;
+        padding: 10px 15px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 11; /* Keep it above other elements */
+    }
+
+    /* Non-mobile top navbar (positioned under mobile navbar) */
+    .top-bar {
+        display: flex; /* Ensure it's visible */
+        position: fixed; /* Make it fixed like mobile navbar */
+        top: 50px; /* Directly below the mobile navbar */
+        width: 100%;
+        z-index: 10; /* Keep it below the mobile navbar */
+    }
+
+    /* Adjust container layout */
+    .container {
+        flex-direction: column;
+        margin: 0;
+        padding: 0;
+        position: relative;
+        top: 110px; /* Push content below both navbars */
+    }
+
+    /* Adjust content sections */
+    .main-content,
+    .resources {
+        width: 100%;
+        margin: 0;
+        padding: 10px; /* Add consistent padding */
+        box-sizing: border-box;
+    }
+
+    .main-content {
+        margin-top: 0;
+    }
+
+    .resources {
+        margin-top: 0;
+    }
+
+    /* Mobile links dropdown */
+    .mobile-links {
+        display: none;
+        flex-direction: column;
+        background-color: #1f1f1f;
+        position: absolute;
+        top: 50px; /* Dropdown aligns under the mobile navbar */
+        left: 0;
+        width: 100%;
+        border-top: 1px solid #333;
+        z-index: 10;
+    }
+
+    .mobile-links.active {
+        display: flex;
+    }
+
+    .mobile-links a {
+        color: #4CAF50;
+        text-decoration: none;
+        padding: 10px 15px;
+        border-bottom: 1px solid #333;
+        text-align: center;
+    }
+
+    .mobile-links a:hover {
+        background-color: #333;
+    }
+	
+	
+    /* Navigation button container */
+    .audio-button {
+        display: flex;
+        justify-content: space-between; /* Space buttons evenly */
+        align-items: center;
+        width: 100%; /* Take full width */
+        box-sizing: border-box; /* Prevent overflow due to padding */
+    }
+
+    /* Individual buttons */
+    .audio-button button {
+        width: 30px; /* Larger size for mobile */
+        height: 30px;
+        border-radius: 50%; /* Perfect circle */
+        background-color: #4CAF50; /* Green button */
+        border: none; /* Remove border */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Add depth */
+        transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover effect */
+    }
+
+    /* Button hover effect */
+    .audio-button button:hover {
+        background-color: #45a049; /* Slightly darker green */
+        transform: scale(1.1); /* Slight zoom on hover */
+    }
+
+    /* Button active/focus effect */
+    .audio-button button:focus {
+        outline: none; /* Remove outline */
+        box-shadow: 0 0 8px #4CAF50; /* Glow effect on focus */
+    }
+
+    /* SVG inside buttons */
+    .audio-button button svg {
+        width: 28px; /* Icon size */
+        height: 28px;
+        fill: #ffffff; /* White icon color for contrast */
+    }
+
+    /* Adjust continuous play checkbox layout */
+    .audio-button label {
+        font-size: 14px; /* Smaller font for mobile */
+        color: #e0e0e0;
+        margin-left: 10px; /* Space next to checkbox */
+        display: flex;
+        align-items: center;
+    }
+
+    .audio-button input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        margin-right: 5px;
+        accent-color: #4CAF50; /* Green checkbox */
+    }
+}
+
 
 
     </style>
 </head>
 <body>
+<div class="mobile-top-navbar">
+    <button class="hamburger-menu" onclick="toggleMobileMenu()">☰</button>
+    <div class="mobile-title">1 Enoch - Translated by R.H. Charles</div>
+</div>
+<div class="mobile-links" id="mobileLinks">
+    <a href="#">Read the Book</a>
+    <a href="#">Study Tools</a>
+    <a href="#">Audio</a>
+    <a href="#">Resources</a>
+    <a href="#">Store</a>
+</div>
     <!-- Top Bar for Dropdown and Audio Button -->
     <div class="top-bar">
         <div class="audio-button">
@@ -381,6 +616,11 @@ And of all the hard things which ungodly sinners have spoken against Him.</p>
 
 
     <script>
+	function toggleMobileMenu() {
+    const mobileLinks = document.getElementById('mobileLinks');
+    mobileLinks.classList.toggle('active');
+}
+
         // Existing chapter data remains the same
  // Chapter data for dynamic content loading
         const chapters = {
