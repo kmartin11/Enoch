@@ -394,6 +394,30 @@
     }
 }
 
+@media (max-width: 767px) and (min-width: 300px) {
+.top-bar {
+    display: flex; /* Use flexbox for layout */
+    justify-content: flex-start; /* Align everything to the start */
+    align-items: center; /* Center items vertically */
+    gap: 0px; /* Minimal space between items */
+    padding: 0; /* Remove extra padding */
+    margin: 0; /* Remove extra margin */
+    box-sizing: border-box; /* Ensure no padding/margin affects size */
+}
+
+.top-bar * { /* Target all child elements */
+    margin: 0; /* Remove margins from child elements */
+    padding: 0; /* Remove paddings from child elements */
+}
+
+
+
+.top-bar label {
+    margin-left: 0px; /* Slight margin for spacing near text */
+    font-size: 0.4em; /* Optional: Adjust font size for compactness */
+}
+
+}
 
 
     </style>
