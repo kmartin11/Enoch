@@ -268,6 +268,30 @@
         width: 100%;
         z-index: 11; /* Keep it above other elements */
     }
+	
+	/* Ensure mobile-links appear above the top-bar */
+#mobileLinks {
+    display: none;
+    flex-direction: column;
+    background-color: #1f1f1f;
+    position: fixed; /* Change from absolute to fixed */
+    top: 60px; /* Matches the height of the top-bar */
+    left: 0;
+    width: 100%;
+    border-top: 1px solid #333;
+    z-index: 20; /* Higher than the top-bar */
+}
+
+/* Show mobile links when active */
+#mobileLinks.active {
+    display: flex;
+}
+
+/* Adjust for z-index layering issues */
+.mobile-top-navbar {
+    z-index: 30; /* Ensure the navbar stays above other elements */
+}
+
 
     /* Non-mobile top navbar (positioned under mobile navbar) */
     .top-bar {
